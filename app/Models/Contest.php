@@ -25,4 +25,9 @@ class Contest extends Model
     {
         return $this->belongsTo(Place::class, 'place_id');
     }
+
+    public function characters()
+    {
+        return $this->belongsToMany(Character::class)->withPivot('hero_hp', 'enemy_hp')->withTimestamps();
+    }
 }

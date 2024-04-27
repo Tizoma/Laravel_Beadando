@@ -17,7 +17,8 @@ class PlaceFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name'=>fake()->text(),
+            'image'=>fake()->text()
         ];
     }
 }
