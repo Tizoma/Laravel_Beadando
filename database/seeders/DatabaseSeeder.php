@@ -84,11 +84,12 @@ class DatabaseSeeder extends Seeder
         for ($i = 0; $i < $contestCount; $i++)
         {
             $contest = Contest::factory()->make();
-            $contest->owner()->associate($users->random());
+            $randHero =$startingHeroes->random();
+            $contest->owner()->associate(User::find($randHero->owner_id));
             $contest->place()->associate($places->random());
             $contest->save();
             $fighters = $startingEnemies->random(1);
-            $fighters->push($startingHeroes->random());
+            $fighters->push($randHero);
             $contest->characters()->attach($fighters->pluck('id'));
             if($contest->win){
                 $contest->characters()->updateExistingPivot('1',['enemy_hp' => 0]);

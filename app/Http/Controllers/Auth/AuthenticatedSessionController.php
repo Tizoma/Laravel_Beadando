@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
+use App\Models\Character;
+use App\Http\Controllers\CharacterController;
+
 class AuthenticatedSessionController extends Controller
 {
     /**
@@ -28,7 +31,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        //ez az második cucc ami kell az alap redirect valtoztatasahoz
         return redirect()->intended(route('dashboard', absolute: false));
+        //return redirect()->intended(route('character.list', absolute: false));
     }
 
     /**

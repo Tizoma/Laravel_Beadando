@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
+use App\Models\Character;
+use App\Http\Controllers\CharacterController;
+
 class RegisteredUserController extends Controller
 {
     /**
@@ -45,6 +48,8 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        //ez az első cucc ami kell az alap redirect valtoztatasahoz
         return redirect(route('dashboard', absolute: false));
+        //return redirect(route('character.list', absolute: false));
     }
 }
