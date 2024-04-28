@@ -61,7 +61,7 @@ class CharacterController extends Controller
         foreach($chosenContests as $chosenContest){
             array_push($placeIdArray,$chosenContest->place_id);
         }
-        $placeNames = DB::table('places')->whereIn('id',$placeIdArray)->take(count($placeIdArray))->get();
+        $placeNames = DB::table('places')->whereIn('id',$placeIdArray)->get();
         $placeNameArray = array();
         for($i=0;$i<count($placeIdArray);$i++){
             if($i==0){
