@@ -89,5 +89,17 @@ class CharacterController extends Controller
     ]);
     }
 
-    // DB::table('contests')->whereIn('id',[1,2,3])->get()
+    public function edit()
+    {
+        return view('characters.edit');
+    }
+
+    public function destroy(string $id)
+    {
+        $character = Character::find($id);
+
+        $character->delete();
+
+        return redirect()->route('characters.index');
+    }
 }

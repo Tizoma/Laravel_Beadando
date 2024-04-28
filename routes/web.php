@@ -9,6 +9,7 @@ use App\Models\Contest;
 
 Route::resource('characters', CharacterController::class);
 Route::resource('contests', ContestController::class);
+//Route::get('/contests/{id}/edit', [ContestController::class, 'edit']);
 
 Route::get('/', function () {
     return redirect()->route('characters.index');

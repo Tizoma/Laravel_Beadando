@@ -24,4 +24,10 @@ class ContestController extends Controller
     {
         return view('contests.index');
     }
+
+
+    public function create()
+    {
+        return view('contests.create');
+    }
 }

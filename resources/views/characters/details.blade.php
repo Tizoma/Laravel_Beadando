@@ -27,7 +27,7 @@
         <p>{{$chosenCharacter->magic}}</p>
         <p>Contests</p>
         @for ($i=0;$i<count($contestWinArray);$i++)
-        <a href="/contests"> {{$contestWinArray[$i]}}</a>
+        <a href="{{ route('contests.index') }}"> {{$contestWinArray[$i]}}</a>
 
         @endfor
         <p>Place names</p>
@@ -38,8 +38,12 @@
         @for ($i=0;$i<count($otherCharacterNameArray);$i++)
         <p>{{$otherCharacterNameArray[$i]}}</p>
         @endfor
-        <p>Modify</p>
-        <p>Delete</p>
-        <p>New contest</p>
+        <a href="{{ route('characters.edit',$chosenCharacter->id) }}">Edit</a>
+        <form action="{{ route('characters.destroy', $chosenCharacter->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" >Delete</button>
+        </form>
+        <a href="{{ route('contests.create') }}">New contest</a>
     </body>
 </html>
