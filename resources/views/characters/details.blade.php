@@ -26,16 +26,19 @@
         <p>{{$chosenCharacter->accuracy}}</p>
         <p>{{$chosenCharacter->magic}}</p>
         <p>Contests</p>
-        <p></p>
-        @foreach ($chosenContests as $chosenContest){
-            {{$chosenContest->id}}
-            {{$chosenContest->win}}
-        }
-        @endforeach
-        <p>Enemies</p>
-        <p></p>
-        @foreach ($otherCharacters as $otherCharacter)
-            {{$otherCharacter->character_id}}
-        @endforeach
+        @for ($i=0;$i<count($contestWinArray);$i++)
+        <p>{{$contestWinArray[$i]}}</p>
+        @endfor
+        <p>Place names</p>
+        @for ($i=0;$i<count($placeNameArray);$i++)
+        <p>{{$placeNameArray[$i]}}</p>
+        @endfor
+        <p>Enemy names</p>
+        @for ($i=0;$i<count($otherCharacterNameArray);$i++)
+        <p>{{$otherCharacterNameArray[$i]}}</p>
+        @endfor
+        <p>Modify</p>
+        <p>Delete</p>
+        <p>New contest</p>
     </body>
 </html>
