@@ -28,11 +28,17 @@ class CharacterController extends Controller
 
     public function list()
     {
+        if(!Auth::check()){
+            return redirect()->route('characters.index');
+        }
         return view('characters.list');
     }
 
     public function details(string $id)
     {
+        if(!Auth::check()){
+            return redirect()->route('characters.index');
+        }
         //Karakter
         $chosenCharacter = DB::table('characters')->find($id);
 
@@ -60,10 +66,18 @@ class CharacterController extends Controller
         for($i=0;$i<count($placeIdArray);$i++){
             if($i==0){
                 array_push($placeNameArray,$placeNames->shift()->name);
-            }else if($placeIdArray[$i-1]==$placeIdArray[$i]){
-                array_push($placeNameArray,$placeNameArray[$i-1]);
             }else{
-                array_push($placeNameArray,$placeNames->shift()->name);
+                $previous=-1;
+                for($j=0;$j<count($placeNameArray);$j++){
+                    if($placeIdArray[$j]==$placeIdArray[$i]){
+                        $previous=$j;
+                    }
+                }
+                if($previous==-1){
+                    array_push($placeNameArray,$placeNames->shift()->name);
+                }else{
+                    array_push($placeNameArray,$placeNameArray[$previous]);
+                }
             }
         }
 
@@ -78,10 +92,18 @@ class CharacterController extends Controller
         for($i=0;$i<count($otherCharacterIdArray);$i++){
             if($i==0){
                 array_push($otherCharacterNameArray,$otherCharacterNames->shift()->name);
-            }else if($otherCharacterIdArray[$i-1]==$otherCharacterIdArray[$i]){
-                array_push($otherCharacterNameArray,$otherCharacterNameArray[$i-1]);
             }else{
-                array_push($otherCharacterNameArray,$otherCharacterNames->shift()->name);
+                $previous=-1;
+                for($j=0;$j<count($otherCharacterNameArray);$j++){
+                    if($otherCharacterIdArray[$j]==$otherCharacterIdArray[$i]){
+                        $previous=$j;
+                    }
+                }
+                if($previous==-1){
+                    array_push($otherCharacterNameArray,$otherCharacterNames->shift()->name);
+                }else{
+                    array_push($otherCharacterNameArray,$otherCharacterNameArray[$previous]);
+                }
             }
         }
         return view('characters.details',['chosenCharacter' => $chosenCharacter
@@ -92,6 +114,9 @@ class CharacterController extends Controller
 
     public function create()
     {
+        if(!Auth::check()){
+            return redirect()->route('characters.index');
+        }
         return view('characters.create');
     }
 
@@ -122,39 +147,9 @@ class CharacterController extends Controller
                 'magic.min' => "Magic can't go below 0!",
 
             ]);
-        // $validated = $request->validate([
-        //     'name' => 'required|max:255',
-        //     'defence' => 'required|integer|max:3|min:0',
-        //     'strength' => 'required|integer|max:20|min:0',
-        //     'accuracy' => 'required|integer|max:20|min:0',
-        //     'magic' => 'required|integer|max:20|min:0',
-        //     'enemy' => 'nullable'
-        // ],
-        // [
-        //     'name.required' => 'Name is required!',
-        //     'name.max' => 'The name can only be 255 characters long!',
-        //     'defence.required' => 'You must specify the amount of defence your character has!',
-        //     'defence.max' => "Defence can't be bigger than 3!",
-        //     'defence.min' => "Defence can't go below 0!",
-        //     'strength.required' => 'You must specify the amount of strength your character has!',
-        //     'strength.max' => "Strength can't be bigger than 20!",
-        //     'strength.min' => "Strength can't go below 0!",
-        //     'accuracy.required' => 'You must specify the accuracy of your character!',
-        //     'accuracy.max' => "Accuracy can't be bigger than 20!",
-        //     'accuracy.min' => "Accuracy can't go below 0!",
-        //     'magic.required' => 'You must specify the amount of magic your character has!',
-        //     'magic.max' => "Magic can't be bigger than 20!",
-        //     'magic.min' => "Magic can't go below 0!",
-
-        // ]);
-        // if(($validated['defence']+$validated['strength']+$validated['accuracy']+$validated['magic'])>20)
-        // {
-        //     $errors->add('points', 'Too many points allocated!');
-        // }
-        // $validated['enemy'] = $request->has('enemy');
 
         if(($request->strength+$request->accuracy+$request->defence+$request->magic)>20){
-            $validator->errors()->add('points','xddddd');
+            $validator->errors()->add('points',"The total amount of points in defence+strength+accuracy+magic can't exceed 20!" );
         }
 
         $validated = $validator->validated();
@@ -169,6 +164,9 @@ class CharacterController extends Controller
 
     public function edit()
     {
+        if(!Auth::check()){
+            return redirect()->route('characters.index');
+        }
         return view('characters.edit');
     }
 

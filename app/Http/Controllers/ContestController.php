@@ -22,12 +22,18 @@ class ContestController extends Controller
 
     public function index()
     {
+        if(!Auth::check()){
+            return redirect()->route('characters.index');
+        }
         return view('contests.index');
     }
 
 
     public function create()
     {
+        if(!Auth::check()){
+            return redirect()->route('characters.index');
+        }
         return view('contests.create');
     }
 }
