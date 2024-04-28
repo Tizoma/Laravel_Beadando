@@ -4,8 +4,11 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CharacterController;
 use App\Models\Character;
+use App\Http\Controllers\ContestController;
+use App\Models\Contest;
 
 Route::resource('characters', CharacterController::class);
+Route::resource('contests', ContestController::class);
 
 Route::get('/', function () {
     return redirect()->route('characters.index');

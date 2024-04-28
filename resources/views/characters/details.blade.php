@@ -27,7 +27,8 @@
         <p>{{$chosenCharacter->magic}}</p>
         <p>Contests</p>
         @for ($i=0;$i<count($contestWinArray);$i++)
-        <p>{{$contestWinArray[$i]}}</p>
+        <a href="/contests"> {{$contestWinArray[$i]}}</a>
+
         @endfor
         <p>Place names</p>
         @for ($i=0;$i<count($placeNameArray);$i++)
