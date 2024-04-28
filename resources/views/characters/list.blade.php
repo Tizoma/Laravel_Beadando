@@ -17,14 +17,14 @@
         @include('layouts.navigation')
         </header>
         @if(isset($userCharacters))
-        <table class="bg-gray-900 rounded-lg overflow-hidden w-full">
+        <table class="bg-slate-600 rounded-lg overflow-hidden w-2/4 m-auto my-4">
             <thead>
                 <tr>
                     <th class="text-left px-4 py-2 border-b border-gray-700 text-white">Name</th>
-                    <th class="text-right px-4 py-2 border-b border-gray-700 text-white">Defence</th>
-                    <th class="text-right px-4 py-2 border-b border-gray-700 text-white">Strength</th>
-                    <th class="text-right px-4 py-2 border-b border-gray-700 text-white">Accuracy</th>
-                    <th class="text-right px-4 py-2 border-b border-gray-700 text-white">Magic</th>
+                    <th class="text-right px-4 py-2 w-40 border-b border-gray-700 text-white">Defence</th>
+                    <th class="text-right px-4 py-2 w-40 border-b border-gray-700 text-white">Strength</th>
+                    <th class="text-right px-4 py-2 w-40 border-b border-gray-700 text-white">Accuracy</th>
+                    <th class="text-right px-4 py-2 w-40 border-b border-gray-700 text-white">Magic</th>
                 </tr>
             </thead>
             <tbody>

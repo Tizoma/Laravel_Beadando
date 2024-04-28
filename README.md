@@ -5,7 +5,7 @@
 [x] - Főoldal 2 pont
 [x] - Karakterek listázása oldal 2 pont
 [x] - Karakter részletes adatai tartalmazó oldal 2 pont
-[ ] - Új karakter létrehozása 6 pont
+[x] - Új karakter létrehozása 6 pont
 [ ] - Karakter módosítása 4 pont
 [x] - Karakter törlése 2 pont
 [ ] - Új mérkőzés létrehozása 3 pont

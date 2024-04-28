@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Character;
 use App\Models\Contest;
 
@@ -87,6 +88,83 @@ class CharacterController extends Controller
                                             ,'chosenContests' => $chosenContests, 'placeNames' => $placeNames,'otherCharacterNames' => $otherCharacterNames,
                                             'placeNameArray' => $placeNameArray, 'contestWinArray' => $contestWinArray, 'otherCharacterNameArray' => $otherCharacterNameArray
     ]);
+    }
+
+    public function create()
+    {
+        return view('characters.create');
+    }
+
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'defence' => 'required|integer|max:3|min:0',
+            'strength' => 'required|integer|max:20|min:0',
+            'accuracy' => 'required|integer|max:20|min:0',
+            'magic' => 'required|integer|max:20|min:0',
+            'enemy' => 'nullable'
+        ],
+        [
+                'name.required' => 'Name is required!',
+                'name.max' => 'The name can only be 255 characters long!',
+                'defence.required' => 'You must specify the amount of defence your character has!',
+                'defence.max' => "Defence can't be bigger than 3!",
+                'defence.min' => "Defence can't go below 0!",
+                'strength.required' => 'You must specify the amount of strength your character has!',
+                'strength.max' => "Strength can't be bigger than 20!",
+                'strength.min' => "Strength can't go below 0!",
+                'accuracy.required' => 'You must specify the accuracy of your character!',
+                'accuracy.max' => "Accuracy can't be bigger than 20!",
+                'accuracy.min' => "Accuracy can't go below 0!",
+                'magic.required' => 'You must specify the amount of magic your character has!',
+                'magic.max' => "Magic can't be bigger than 20!",
+                'magic.min' => "Magic can't go below 0!",
+
+            ]);
+        // $validated = $request->validate([
+        //     'name' => 'required|max:255',
+        //     'defence' => 'required|integer|max:3|min:0',
+        //     'strength' => 'required|integer|max:20|min:0',
+        //     'accuracy' => 'required|integer|max:20|min:0',
+        //     'magic' => 'required|integer|max:20|min:0',
+        //     'enemy' => 'nullable'
+        // ],
+        // [
+        //     'name.required' => 'Name is required!',
+        //     'name.max' => 'The name can only be 255 characters long!',
+        //     'defence.required' => 'You must specify the amount of defence your character has!',
+        //     'defence.max' => "Defence can't be bigger than 3!",
+        //     'defence.min' => "Defence can't go below 0!",
+        //     'strength.required' => 'You must specify the amount of strength your character has!',
+        //     'strength.max' => "Strength can't be bigger than 20!",
+        //     'strength.min' => "Strength can't go below 0!",
+        //     'accuracy.required' => 'You must specify the accuracy of your character!',
+        //     'accuracy.max' => "Accuracy can't be bigger than 20!",
+        //     'accuracy.min' => "Accuracy can't go below 0!",
+        //     'magic.required' => 'You must specify the amount of magic your character has!',
+        //     'magic.max' => "Magic can't be bigger than 20!",
+        //     'magic.min' => "Magic can't go below 0!",
+
+        // ]);
+        // if(($validated['defence']+$validated['strength']+$validated['accuracy']+$validated['magic'])>20)
+        // {
+        //     $errors->add('points', 'Too many points allocated!');
+        // }
+        // $validated['enemy'] = $request->has('enemy');
+
+        if(($request->strength+$request->accuracy+$request->defence+$request->magic)>20){
+            $validator->errors()->add('points','xddddd');
+        }
+
+        $validated = $validator->validated();
+        $character = Character::make($validated);
+
+        $character->owner()->associate(Auth::user());
+
+        $character->save();
+
+        return redirect()->route('characters.index');
     }
 
     public function edit()

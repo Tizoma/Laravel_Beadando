@@ -20,30 +20,56 @@
             window.location = "/characters";
         </script>
         @endif
-        <p>{{$chosenCharacter->name}}</p>
-        <p>{{$chosenCharacter->defence}}</p>
-        <p>{{$chosenCharacter->strength}}</p>
-        <p>{{$chosenCharacter->accuracy}}</p>
-        <p>{{$chosenCharacter->magic}}</p>
-        <p>Contests</p>
-        @for ($i=0;$i<count($contestWinArray);$i++)
-        <a href="{{ route('contests.index') }}"> {{$contestWinArray[$i]}}</a>
-
-        @endfor
-        <p>Place names</p>
-        @for ($i=0;$i<count($placeNameArray);$i++)
-        <p>{{$placeNameArray[$i]}}</p>
-        @endfor
-        <p>Enemy names</p>
-        @for ($i=0;$i<count($otherCharacterNameArray);$i++)
-        <p>{{$otherCharacterNameArray[$i]}}</p>
-        @endfor
-        <a href="{{ route('characters.edit',$chosenCharacter->id) }}">Edit</a>
+        <table class="bg-slate-600 rounded-lg overflow-hidden w-8/12 m-auto my-4">
+            <thead>
+                <tr>
+                    <th class="text-left px-4 py-2 border-b border-gray-700 text-white">Name</th>
+                    <th class="text-right px-4 py-2 border-b border-gray-700 text-white">Defence</th>
+                    <th class="text-right px-4 py-2 border-b border-gray-700 text-white">Strength</th>
+                    <th class="text-right px-4 py-2 border-b border-gray-700 text-white">Accuracy</th>
+                    <th class="text-right px-4 py-2 border-b border-gray-700 text-white">Magic</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr">
+                    <td class="text-left px-4 py-2 border-b border-gray-700 text-white"> {{ $chosenCharacter->name }}</td>
+                    <td class="text-right px-4 py-2 border-b border-gray-700 text-white">{{ $chosenCharacter->defence }}</td>
+                    <td class="text-right px-4 py-2 border-b border-gray-700 text-white">{{ $chosenCharacter->strength }}</td>
+                    <td class="text-right px-4 py-2 border-b border-gray-700 text-white">{{ $chosenCharacter->accuracy }}</td>
+                    <td class="text-right px-4 py-2 border-b border-gray-700 text-white">{{ $chosenCharacter->magic }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="bg-slate-600 rounded-lg overflow-hidden w-8/12 m-auto my-4">
+            <thead>
+                <tr>
+                    <th class="text-center px-4 py-2 border-b border-gray-700 text-white">Outcome</th>
+                    <th class="text-center px-4 py-2 border-b border-gray-700 text-white">Place</th>
+                    <th class="text-center px-4 py-2 border-b border-gray-700 text-white">Enemy</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for ($i=0;$i<count($contestWinArray);$i++)
+                <tr>
+                    @if ($contestWinArray[$i])
+                    <td class="bg-green-500 hover:bg-green-600 text-center px-4 py-2 border-b border-gray-700 text-white"> <a href="{{ route('contests.index') }}"> Win</a></td>
+                    @else
+                    <td class="bg-red-500 hover:bg-red-600 text-center px-4 py-2 border-b border-gray-700 text-white"> <a href="{{ route('contests.index') }}"> Lose</a></td>
+                    @endif
+                    <td class="text-center px-4 py-2 border-b border-gray-700 text-white">{{ $placeNameArray[$i] }}</td>
+                    <td class="text-center px-4 py-2 border-b border-gray-700 text-white">{{ $otherCharacterNameArray[$i] }}</td>
+                </tr>
+                @endfor
+            </tbody>
+        </table>
+        <p class="bg-yellow-400 w-16 m-auto my-4 text-white px-4 py-2 rounded hover:bg-yellow-500"><a href="{{ route('characters.edit',$chosenCharacter->id) }}">Edit</a></p>
+        <div class="flex justify-center my-4">
         <form action="{{ route('characters.destroy', $chosenCharacter->id) }}" method="POST">
             @csrf
             @method('DELETE')
-            <button type="submit" >Delete</button>
+            <button type="submit" class="bg-red-400 w-20 text-white px-4 py-2 rounded hover:bg-red-500" >Delete</button>
         </form>
-        <a href="{{ route('contests.create') }}">New contest</a>
+        </div>
+        <p class="bg-green-400 w-32 m-auto my-4 text-white px-4 py-2 rounded hover:bg-green-500"><a href="{{ route('contests.index') }}">New contest</a></p>
     </body>
 </html>
